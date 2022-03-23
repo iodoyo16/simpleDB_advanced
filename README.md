@@ -41,3 +41,8 @@ Red-Black tree 에는 4가지의 규칙이 있는데, 그 규칙은 아래와 �
 
 이러한 규칙을 만족할때, RB tree 에서 black depth가 같으면서 가장 짧은경우는 black 노드만 있는경우이고 가장 긴 경우는
 black-red-black-...-black 이 반복되는 경우 이므로 가장 긴 leaf와 짧은 leaf의 높이의 차이가 2배 이내로 balancing 한다.
+
+3.memory_pool
+---
+insert, delete 명령어의 경우, 새로운 노드를 위한 메모리를 할당하거나, 삭제할 노드의 메모리를 해제하는데, 메모리를 할당하고 해제할 때 사용하는 malloc,calloc / free의 함수는 memory fragmentation, system call 호출 등의 이유로 overhead가 크다. 따라서 메모리를 할당, 해제를 반복하는 대신, memory_pool을 이용해서 삭제한 노드의 메모리 공간을 메모리 해제하지 않고 관리하다가 나중에 다시 새로운 노드를 할당하기 위해서 메모리 공간을 요구하면, 해당 메모리 공간을 리턴해준다.<br><br>
+이 과정을 통해서 malloc, calloc / free 를 반복하면서 발생할 수 있는 overhead를 optimize 했다.
